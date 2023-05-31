@@ -113,6 +113,9 @@ export const publicStore = createSlice({
 		},
 		setOrderId: (state, action: PayloadAction<string>) => {
 			state.navigation.orderId = action.payload;
+		},
+		removeOrderId: (state, action: PayloadAction<string>) => {
+			state.orders.value = state.orders.value.filter((order) => order._id !== action.payload);
 		}
 	},
 	extraReducers: (builder) => {
@@ -171,7 +174,8 @@ export const publicStore = createSlice({
 	}
 });
 
-export const { navigate, setShowMenu, setCurrency, setOrderId } = publicStore.actions;
+export const { navigate, setShowMenu, setCurrency, setOrderId, removeOrderId } =
+	publicStore.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

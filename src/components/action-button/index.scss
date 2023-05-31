@@ -1,35 +1,46 @@
-a:link, a:visited, a:hover, a:active {
-  text-decoration: none;
+a:link,
+a:visited,
+a:hover,
+a:active {
+	text-decoration: none;
 }
 
 .action-button-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
 
-  background: rgba(183, 182, 187, 0.15);
-  border-radius: 54px;
-  height: 38px;
-  padding: 0px 16px 0px 16px;
+	background: rgba(183, 182, 187, 0.15);
+	border-radius: 54px;
+	height: 38px;
+	padding: 0px 16px 0px 16px;
 
-  .action-button-icon {
-    width: 12px;
-    margin-right: 10px;
-  }
+	.action-button-icon {
+		width: 12px;
+		margin-right: 10px;
+	}
 
-  .action-button-text {
-    color: white;
-  }
+	.action-delete-button-icon {
+		width: 16px;
+		margin-right: 0px;
+	}
 
-  .action-button-text-sm {
-    color: white;
-    font-size: 15px;
-  }
+	.action-button-text {
+		color: white;
+	}
+
+	.action-button-text-sm {
+		color: white;
+		font-size: 15px;
+	}
 }
-
 
 .action-button-container-sm {
-  padding: 10px 20px
+	padding: 10px 20px;
 }
 
+.action-button-delete-container {
+	width: 56px;
+	margin-right: 8px;
+}

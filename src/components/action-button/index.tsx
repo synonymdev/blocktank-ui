@@ -13,15 +13,17 @@ export default ({
 	href,
 	Icon,
 	disabled,
-	size
+	size,
+	...props
 }: {
-	children: string;
+	children?: string;
 	copyText?: string;
 	onClick?: () => void;
 	href?: string;
 	Icon?: React.FunctionComponent<React.SVGProps<SVGSVGElement> & { title?: string }>;
 	disabled?: boolean;
 	size?: TActionButtonSize;
+	className?: string;
 }): JSX.Element => {
 	const [isCopied, setIsCopied] = useState(false);
 
@@ -50,7 +52,7 @@ export default ({
 	const button = (
 		<div className={containerClass} onClick={!disabled ? onClick : undefined}>
 			{ButtonIcon ? <ButtonIcon className={'action-button-icon'} /> : null}
-			<span className={buttonTextClass}>{isCopied ? 'Copied!' : children}</span>
+			{children ? <span className={buttonTextClass}>{isCopied ? 'Copied!' : children}</span> : null}
 		</div>
 	);
 

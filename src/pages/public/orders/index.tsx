@@ -6,6 +6,7 @@ import {
 	refreshOrder,
 	selectOrders,
 	selectOrdersState,
+	removeOrderId,
 	TPublicPage
 } from '../../../store/public-store';
 import FormCard from '../../../components/form-card';
@@ -18,6 +19,7 @@ import { ReactComponent as Lightning } from '../../../icons/lightning.svg';
 import { ReactComponent as LightningActive } from '../../../icons/lightning-active.svg';
 import { ReactComponent as LightningGreen } from '../../../icons/lightning-green.svg';
 import { ReactComponent as LightningRed } from '../../../icons/lightning-red.svg';
+import { ReactComponent as Trash } from '../../../icons/trash.svg';
 
 import './index.scss';
 
@@ -29,7 +31,8 @@ const ListItem = ({
 	label,
 	onClick,
 	buttonText,
-	hasScrollBar
+	hasScrollBar,
+	showDeleteButton
 }: {
 	id: string;
 	Icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
@@ -39,7 +42,9 @@ const ListItem = ({
 	onClick: () => void;
 	buttonText: string;
 	hasScrollBar: boolean;
+	showDeleteButton: boolean;
 }): JSX.Element => {
+	const dispatch = useAppDispatch();
 	const randomStringId = Math.random().toString(36).substring(7);
 	return (
 		<div
@@ -55,7 +60,17 @@ const ListItem = ({
 						{label}
 					</span>
 				</div>
-
+				{showDeleteButton && (
+					<div
+						className={'action-button-container action-button-delete-container'}
+						onClick={(e) => {
+							e.preventDefault();
+							dispatch(removeOrderId(id));
+						}}
+					>
+						<Trash className={'action-delete-button-icon'} />
+					</div>
+				)}
 				<Button onClick={onClick}>{buttonText}</Button>
 			</div>
 			<Divider />
@@ -97,6 +112,7 @@ function OrdersPage(): JSX.Element {
 						subHeading={'New channel'}
 						label={'Lightning channel'}
 						buttonText={'Create channel'}
+						showDeleteButton={false}
 						onClick={() => dispatch(navigate({ page: 'configure' }))}
 						hasScrollBar={hasScrollbar}
 					/>
@@ -106,6 +122,7 @@ function OrdersPage(): JSX.Element {
 					let buttonText = 'Order details';
 					let Icon = Lightning;
 					let page: TPublicPage = 'order';
+					let showDeleteButton = false;
 
 					switch (state) {
 						case 0: {
@@ -119,6 +136,7 @@ function OrdersPage(): JSX.Element {
 								Icon = TransferActive;
 							}
 							page = 'payment';
+							showDeleteButton = true;
 							break;
 						}
 						case 100: {
@@ -134,9 +152,11 @@ function OrdersPage(): JSX.Element {
 							break;
 						case 400: // Given up
 							Icon = LightningRed;
+							showDeleteButton = true;
 							break;
 						case 450: // Channel closed
 							Icon = LightningRed;
+							showDeleteButton = true;
 							break;
 						case 500: // Channel open
 							Icon = LightningGreen;
@@ -154,6 +174,7 @@ function OrdersPage(): JSX.Element {
 								day: 'numeric',
 								year: 'numeric'
 							})}
+							showDeleteButton={showDeleteButton}
 							subHeading={'Order status'}
 							label={stateMessage}
 							buttonText={buttonText}
